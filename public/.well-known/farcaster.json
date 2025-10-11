@@ -1,12 +1,13 @@
 {
-  "name": "MoneyPaiger Mini App",
-  "description": "Explore and interact with MoneyPaiger mini app features",
-  "url": "https://moneypaiger-mini-app.vercel.app",
-  "type": "miniapp",
-  "version": "1.0.0",
-  "icon": "https://moneypaiger-mini-app.vercel.app/icon.png",
-  "author": {
-    "name": "Munazir Raza",
-    "url": "https://moneypaiger-mini-app.vercel.app"
-  }
+  "name": "moneypaiger mini app",
+  "slug": "moneypaiger",
+  "url": "https://moneypaiger-mini-app.vercel.app/",
+  "developer": {
+    "name": "munazir",
+    "farcasterHandle": "munazir"
+  },
+  "description": "Timeline of Digital Finance - Mint exclusive NFTs",
+  "icon": "https://moneypaiger-mini-app.vercel.app/images/nft1.png",
+  "categories": ["NFT", "Finance"],
+  "themeColor": "#667eea"
 }
