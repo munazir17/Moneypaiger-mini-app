@@ -1,0 +1,11 @@
+{
+  "name": "MoneyPaiger Mini App",
+  "description": "Track and interact with your NFTs and tokens seamlessly.",
+  "frame": "vNext",
+  "url": "https://moneypaiger-mini-app-yofe.vercel.app/",
+  "icon": "https://moneypaiger-mini-app-yofe.vercel.app/icon.png",
+  "developer": {
+    "name": "Munazir Raza",
+    "url": "https://moneypaiger-mini-app-yofe.vercel.app/"
+  }
+}
