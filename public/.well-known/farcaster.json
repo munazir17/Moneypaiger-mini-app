@@ -1,4 +1,9 @@
 {
+  "accountAssociation": {
+    "header": "PASTE_YOUR_HEADER_HERE",
+    "payload": "PASTE_YOUR_PAYLOAD_HERE",
+    "signature": "PASTE_YOUR_SIGNATURE_HERE"
+  },
   "name": "moneypaiger mini app",
   "slug": "moneypaiger",
   "url": "https://moneypaiger-mini-app-yofe.vercel.app/",
