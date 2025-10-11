@@ -1,0 +1,12 @@
+{
+  "name": "MoneyPaiger Mini App",
+  "description": "Explore and interact with MoneyPaiger mini app features",
+  "url": "https://moneypaiger-mini-app.vercel.app",
+  "type": "miniapp",
+  "version": "1.0.0",
+  "icon": "https://moneypaiger-mini-app.vercel.app/icon.png",
+  "author": {
+    "name": "Munazir Raza",
+    "url": "https://moneypaiger-mini-app.vercel.app"
+  }
+}
