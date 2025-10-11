@@ -78,8 +78,7 @@ footer{text-align:center;margin-top:60px;padding:30px 0;border-top:2px solid rgb
 const contractAddress = "0x995d1e3471c06f27ad145cc7d0d0bb48f38ad938";
 const abi = [
   "function publicMint() external",
-  "function currentTokenId() public view returns (uint256)",
-  "function publicMintActive() public view returns (bool)"
+  "function currentTokenId() view returns (uint256)"
 ];
 const maxSupply = 1000000;
 
@@ -135,33 +134,4 @@ async function connectWallet(){
     provider = new ethers.providers.Web3Provider(window.ethereum);
     signer = provider.getSigner();
     contract = new ethers.Contract(contractAddress, abi, signer);
-    walletEl.textContent = `Wallet: ${userAddress.slice(0,6)}...${userAddress.slice(-4)}`;
-    btn.textContent='Connected';
-    await updateSupply();
-  }catch(err){
-    console.error('Connect wallet error:',err);
-    btn.textContent='Connect Wallet'; btn.disabled=false;
-  }
-}
-
-async function mintNFT(statusId){
-  const statusEl = document.getElementById(statusId);
-  try{
-    const isActive = await contract.publicMintActive();
-    if(!isActive){ statusEl.className='status error'; statusEl.textContent='Public mint not active'; return; }
-    statusEl.className='status info'; statusEl.textContent='Minting... Confirm in wallet';
-    const tx = await contract.publicMint();
-    await tx.wait();
-    statusEl.className='status success'; statusEl.textContent='✅ NFT Minted!';
-    await updateSupply();
-  }catch(err){
-    console.error('Mint error:',err);
-    statusEl.className='status error'; statusEl.textContent='Mint failed: '+(err.reason||err.message);
-  }
-}
-
-document.getElementById('connectBtn').addEventListener('click',connectWallet);
-window.addEventListener('load', async()=>{ await updateSupply(); });
-</script>
-</body>
-</html>
+    wallet
