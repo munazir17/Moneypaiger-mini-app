@@ -83,12 +83,14 @@ const abi = [
 let provider, signer, contract;
 let userAddress = null;
 
+// ✅ All 6 NFTs included
 const nftData = [
   {id:1, title:"Digital Finance Genesis", desc:"Commemorating the foundations of MoneyPaiger ecosystem.", img:"https://moneypaiger-mini-app-4vo8.vercel.app/images/nft1.png"},
   {id:2, title:"MP Rising", desc:"The iconic MP logo representing growth and innovation.", img:"https://moneypaiger-mini-app-4vo8.vercel.app/images/nft2.png"},
   {id:3, title:"MoneyPaiger Icon", desc:"Sleek MP icon badge representing financial growth.", img:"https://moneypaiger-mini-app-4vo8.vercel.app/images/nft3.png"},
   {id:4, title:"MoneyPaiger Brand", desc:"Full branding experience. Professional design meets excellence.", img:"https://moneypaiger-mini-app-4vo8.vercel.app/images/nft4.png"},
-  {id:5, title:"MP Neon Logo", desc:"Neon styled logo highlighting digital innovation.", img:"https://moneypaiger-mini-app-4vo8.vercel.app/images/nft5.png"}
+  {id:5, title:"MP Neon Logo", desc:"Neon styled logo highlighting digital innovation.", img:"https://moneypaiger-mini-app-4vo8.vercel.app/images/nft5.png"},
+  {id:6, title:"MP Ultimate", desc:"Limited edition NFT celebrating MoneyPaiger milestones.", img:"https://moneypaiger-mini-app-4vo8.vercel.app/images/nft6.png"}
 ];
 
 const grid = document.getElementById("nft-grid");
@@ -188,18 +190,8 @@ async function connectWallet() {
 async function updateSupply() {
   try {
     if (!contract) {
-      // Create provider with explicit network configuration for Base
-      const baseNetworkConfig = {
-        name: 'base',
-        chainId: 8453, // Base mainnet chain ID (decimal)
-      };
-      // Try multiple RPC endpoints for reliability
-      const rpcUrls = [
-        'https://mainnet.base.org',
-        'https://base.llamarpc.com',
-        'https://base-mainnet.public.blastapi.io'
-      ];
-      const tempProvider = new ethers.providers.JsonRpcProvider(rpcUrls[0], baseNetworkConfig);
+      const baseNetworkConfig = { name: 'base', chainId: 8453 };
+      const tempProvider = new ethers.providers.JsonRpcProvider('https://mainnet.base.org', baseNetworkConfig);
       const tempContract = new ethers.Contract(contractAddress, abi, tempProvider);
       const total = await tempContract.totalSupply();
       const max = await tempContract.maxSupply();
@@ -232,14 +224,10 @@ async function mintNFT(amount, statusId) {
     statusEl.textContent = 'Confirm transaction in your wallet...';
 
     const tx = await contract.mint(amount);
-    
     statusEl.textContent = 'Transaction submitted! Waiting for confirmation...';
-    
     await tx.wait();
-    
     statusEl.className = 'status success';
     statusEl.textContent = '✅ NFT Minted Successfully!';
-    
     await updateSupply();
     
     setTimeout(() => {
@@ -250,7 +238,6 @@ async function mintNFT(amount, statusId) {
   } catch (error) {
     console.error('Mint error:', error);
     statusEl.className = 'status error';
-    
     if (error.code === 4001) {
       statusEl.textContent = 'Transaction rejected by user';
     } else if (error.message.includes('insufficient funds')) {
@@ -258,25 +245,21 @@ async function mintNFT(amount, statusId) {
     } else {
       statusEl.textContent = 'Mint failed: ' + (error.reason || error.message);
     }
-    
     btn.disabled = false;
     btn.textContent = 'Mint NFT';
   }
 }
 
-// Connect wallet button event listener - THIS WAS MISSING!
+// Connect wallet button
 document.getElementById('connectBtn').addEventListener('click', connectWallet);
 
-// Check if wallet is already connected on page load
+// Auto-connect on page load
 window.addEventListener('load', async () => {
   if (window.ethereum) {
     try {
       const accounts = await window.ethereum.request({ method: 'eth_accounts' });
-      if (accounts.length > 0) {
-        await connectWallet();
-      } else {
-        await updateSupply(); // Still show supply even if not connected
-      }
+      if (accounts.length > 0) await connectWallet();
+      else await updateSupply();
     } catch (error) {
       console.error('Auto-connect failed:', error);
       await updateSupply();
@@ -286,7 +269,7 @@ window.addEventListener('load', async () => {
   }
 });
 
-// Listen for account changes
+// Listen for account/network changes
 if (window.ethereum) {
   window.ethereum.on('accountsChanged', (accounts) => {
     if (accounts.length === 0) {
@@ -295,14 +278,10 @@ if (window.ethereum) {
       userAddress = null;
       contract = null;
       signer = null;
-    } else {
-      connectWallet();
-    }
+    } else connectWallet();
   });
 
-  window.ethereum.on('chainChanged', () => {
-    window.location.reload();
-  });
+  window.ethereum.on('chainChanged', () => window.location.reload());
 }
 </script>
 </body>
