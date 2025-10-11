@@ -23,9 +23,10 @@ h1{font-size:3em;font-weight:900;background:linear-gradient(135deg,#667eea 0%,#7
 .creator-info{font-size:0.9em;color:#888;margin-top:10px;}
 .creator-info a{color:#667eea;text-decoration:none;transition:color 0.3s;}
 .creator-info a:hover{color:#764ba2;}
-#connectBtn{margin-bottom:20px;padding:15px 25px;font-size:1em;font-weight:700;border:none;border-radius:10px;background:linear-gradient(135deg,#667eea 0%,#764ba2 100%);color:#fff;cursor:pointer;transition: transform 0.2s;}
+#connectBtn{margin-bottom:10px;padding:15px 25px;font-size:1em;font-weight:700;border:none;border-radius:10px;background:linear-gradient(135deg,#667eea 0%,#764ba2 100%);color:#fff;cursor:pointer;transition: transform 0.2s;}
 #connectBtn:hover{transform:scale(1.05);}
 #connectBtn:disabled{background:#333;cursor:default;}
+.connected-wallet{margin-bottom:20px;color:#22c55e;font-weight:700;}
 .supply-counter{font-size:1.1em;color:#22c55e;margin-bottom:30px;text-align:center;}
 .nft-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:30px;}
 .nft-card{background:rgba(255,255,255,0.05);border-radius:20px;overflow:hidden;transition:transform 0.3s, box-shadow 0.3s;border:1px solid rgba(255,255,255,0.1);}
@@ -57,6 +58,7 @@ footer{text-align:center;margin-top:60px;padding:30px 0;border-top:2px solid rgb
 <p class="tagline">Timeline of Digital Finance - Since 2017</p>
 <p class="creator-info">Built by <a href="https://farcaster.xyz/munazir" target="_blank">@munazir</a> on Farcaster</p>
 <button id="connectBtn">Connect Wallet</button>
+<p class="connected-wallet" id="connected-wallet"></p>
 <div class="supply-counter" id="supply-counter">Loading supply...</div>
 </header>
 
@@ -83,7 +85,6 @@ const abi = [
 let provider, signer, contract;
 let userAddress = null;
 
-// ✅ All 6 NFTs included
 const nftData = [
   {id:1, title:"Digital Finance Genesis", desc:"Commemorating the foundations of MoneyPaiger ecosystem.", img:"https://moneypaiger-mini-app-4vo8.vercel.app/images/nft1.png"},
   {id:2, title:"MP Rising", desc:"The iconic MP logo representing growth and innovation.", img:"https://moneypaiger-mini-app-4vo8.vercel.app/images/nft2.png"},
@@ -123,23 +124,14 @@ async function checkNetwork() {
   const currentChain = await window.ethereum.request({ method: 'eth_chainId' });
   if (currentChain !== baseNetwork.chainId) {
     try {
-      await window.ethereum.request({
-        method: 'wallet_switchEthereumChain',
-        params: [{ chainId: baseNetwork.chainId }],
-      });
+      await window.ethereum.request({ method: 'wallet_switchEthereumChain', params:[{chainId: baseNetwork.chainId}] });
       return true;
     } catch (err) {
       if (err.code === 4902) {
         try {
-          await window.ethereum.request({
-            method: 'wallet_addEthereumChain',
-            params: [baseNetwork],
-          });
+          await window.ethereum.request({ method: 'wallet_addEthereumChain', params: [baseNetwork] });
           return true;
-        } catch (addError) {
-          console.error('Failed to add Base network:', addError);
-          return false;
-        }
+        } catch (addError) { console.error('Failed to add Base network:', addError); return false; }
       }
       console.error('Failed to switch network:', err);
       return false;
@@ -147,9 +139,9 @@ async function checkNetwork() {
   }
   return true;
 }
-
-async function connectWallet() {
+  async function connectWallet() {
   const btn = document.getElementById('connectBtn');
+  const walletEl = document.getElementById('connected-wallet');
   
   if (!window.ethereum) {
     alert('Please install MetaMask or another Web3 wallet!');
@@ -160,29 +152,26 @@ async function connectWallet() {
     btn.textContent = 'Connecting...';
     btn.disabled = true;
 
-    const accounts = await window.ethereum.request({ 
-      method: 'eth_requestAccounts' 
-    });
-    
+    const accounts = await window.ethereum.request({ method: 'eth_requestAccounts' });
     userAddress = accounts[0];
-    
+
     const networkOk = await checkNetwork();
-    if (!networkOk) {
-      throw new Error('Please switch to Base network');
-    }
+    if (!networkOk) throw new Error('Please switch to Base network');
 
     provider = new ethers.providers.Web3Provider(window.ethereum);
     signer = provider.getSigner();
     contract = new ethers.Contract(contractAddress, abi, signer);
 
-    btn.textContent = `Connected: ${userAddress.slice(0,6)}...${userAddress.slice(-4)}`;
-    
+    btn.textContent = 'Connected';
+    walletEl.textContent = `Wallet: ${userAddress.slice(0,6)}...${userAddress.slice(-4)}`;
+
     await updateSupply();
-    
+
   } catch (error) {
     console.error('Connection error:', error);
     btn.textContent = 'Connect Wallet';
     btn.disabled = false;
+    walletEl.textContent = '';
     alert('Failed to connect wallet: ' + error.message);
   }
 }
@@ -190,9 +179,8 @@ async function connectWallet() {
 async function updateSupply() {
   try {
     if (!contract) {
-      const baseNetworkConfig = { name: 'base', chainId: 8453 };
-      const tempProvider = new ethers.providers.JsonRpcProvider('https://mainnet.base.org', baseNetworkConfig);
-      const tempContract = new ethers.Contract(contractAddress, abi, tempProvider);
+      const rpcProvider = new ethers.providers.JsonRpcProvider('https://mainnet.base.org');
+      const tempContract = new ethers.Contract(contractAddress, abi, rpcProvider);
       const total = await tempContract.totalSupply();
       const max = await tempContract.maxSupply();
       document.getElementById('supply-counter').textContent = `Minted: ${total.toString()} / ${max.toString()}`;
@@ -210,7 +198,7 @@ async function updateSupply() {
 async function mintNFT(amount, statusId) {
   const statusEl = document.getElementById(statusId);
   const btn = statusEl.previousElementSibling;
-  
+
   if (!contract || !signer) {
     statusEl.className = 'status error';
     statusEl.textContent = 'Please connect your wallet first!';
@@ -226,10 +214,11 @@ async function mintNFT(amount, statusId) {
     const tx = await contract.mint(amount);
     statusEl.textContent = 'Transaction submitted! Waiting for confirmation...';
     await tx.wait();
+
     statusEl.className = 'status success';
     statusEl.textContent = '✅ NFT Minted Successfully!';
     await updateSupply();
-    
+
     setTimeout(() => {
       btn.disabled = false;
       btn.textContent = 'Mint NFT';
@@ -238,22 +227,18 @@ async function mintNFT(amount, statusId) {
   } catch (error) {
     console.error('Mint error:', error);
     statusEl.className = 'status error';
-    if (error.code === 4001) {
-      statusEl.textContent = 'Transaction rejected by user';
-    } else if (error.message.includes('insufficient funds')) {
-      statusEl.textContent = 'Insufficient ETH for gas fees';
-    } else {
-      statusEl.textContent = 'Mint failed: ' + (error.reason || error.message);
-    }
+    if (error.code === 4001) statusEl.textContent = 'Transaction rejected by user';
+    else if (error.message.includes('insufficient funds')) statusEl.textContent = 'Insufficient ETH for gas fees';
+    else statusEl.textContent = 'Mint failed: ' + (error.reason || error.message);
     btn.disabled = false;
     btn.textContent = 'Mint NFT';
   }
 }
 
-// Connect wallet button
+// Connect wallet button event
 document.getElementById('connectBtn').addEventListener('click', connectWallet);
 
-// Auto-connect on page load
+// Auto-connect if wallet already connected
 window.addEventListener('load', async () => {
   if (window.ethereum) {
     try {
@@ -272,16 +257,23 @@ window.addEventListener('load', async () => {
 // Listen for account/network changes
 if (window.ethereum) {
   window.ethereum.on('accountsChanged', (accounts) => {
+    const walletEl = document.getElementById('connected-wallet');
+    const btn = document.getElementById('connectBtn');
     if (accounts.length === 0) {
-      document.getElementById('connectBtn').textContent = 'Connect Wallet';
-      document.getElementById('connectBtn').disabled = false;
+      btn.textContent = 'Connect Wallet';
+      btn.disabled = false;
+      walletEl.textContent = '';
       userAddress = null;
       contract = null;
       signer = null;
-    } else connectWallet();
+    } else {
+      connectWallet();
+    }
   });
 
-  window.ethereum.on('chainChanged', () => window.location.reload());
+  window.ethereum.on('chainChanged', () => {
+    window.location.reload();
+  });
 }
 </script>
 </body>
