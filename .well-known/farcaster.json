@@ -1,11 +1,13 @@
 {
   "name": "MoneyPaiger Mini App",
-  "description": "Track and interact with your NFTs and tokens seamlessly.",
-  "frame": "vNext",
+  "slug": "moneypaiger",
   "url": "https://moneypaiger-mini-app-yofe.vercel.app/",
-  "icon": "https://moneypaiger-mini-app-yofe.vercel.app/icon.png",
   "developer": {
-    "name": "Munazir Raza",
-    "url": "https://moneypaiger-mini-app-yofe.vercel.app/"
-  }
+    "name": "Munazir Raza"
+  },
+  "description": "Timeline of Digital Finance - Mint exclusive NFTs",
+  "icon": "https://moneypaiger-mini-app-yofe.vercel.app/images/nft1.png",
+  "categories": ["NFT", "Finance"],
+  "themeColor": "#667eea",
+  "frame": "vNext"
 }
