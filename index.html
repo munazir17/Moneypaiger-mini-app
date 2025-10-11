@@ -26,6 +26,10 @@ h1 { font-size:3em; font-weight:900; background: linear-gradient(135deg,#667eea 
 .creator-info a { color:#667eea; text-decoration:none; transition:color 0.3s; }
 .creator-info a:hover { color:#764ba2; }
 
+#connectBtn { margin-bottom:20px; padding:15px 25px; font-size:1em; font-weight:700; border:none; border-radius:10px; background:linear-gradient(135deg,#667eea 0%,#764ba2 100%); color:#fff; cursor:pointer; transition: transform 0.2s; }
+#connectBtn:hover { transform:scale(1.05); }
+#connectBtn:disabled { background:#333; cursor:default; }
+
 .supply-counter { font-size:1.1em; color:#22c55e; margin-bottom:30px; text-align:center; }
 
 .nft-grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(300px,1fr)); gap:30px; }
@@ -56,6 +60,7 @@ footer { text-align:center; margin-top:60px; padding:30px 0; border-top:2px soli
 <h1>MONEYPAIGER</h1>
 <p class="tagline">Timeline of Digital Finance - Since 2017</p>
 <p class="creator-info">Built by <a href="https://farcaster.xyz/munazir" target="_blank">@munazir</a> on Farcaster</p>
+<button id="connectBtn">Connect Wallet</button>
 <div class="supply-counter" id="supply-counter">Loading supply...</div>
 </header>
 
@@ -93,59 +98,68 @@ const abi = [
 
 let provider, signer, contract;
 
-async function connectWallet() {
-  if(window.ethereum){
-    await window.ethereum.request({ method: 'eth_requestAccounts' });
-    provider = new ethers.BrowserProvider(window.ethereum);
-    signer = await provider.getSigner();
-    contract = new ethers.Contract(contractAddress, abi, signer);
-    console.log("Wallet connected");
-  }else{
-    alert("Install MetaMask to mint NFTs!");
-  }
-}
+const connectBtn = document.getElementById("connectBtn");
+connectBtn.onclick = async () => {
+    if(window.ethereum){
+        try{
+            await window.ethereum.request({ method:'eth_requestAccounts' });
+            provider = new ethers.BrowserProvider(window.ethereum);
+            signer = await provider.getSigner();
+            contract = new ethers.Contract(contractAddress, abi, signer);
+            connectBtn.innerText = "Wallet Connected ✅";
+            connectBtn.disabled = true;
+            console.log("Wallet connected!");
+        } catch(err){
+            console.error(err);
+            alert("Wallet connection failed: "+err.message);
+        }
+    } else {
+        alert("Install MetaMask to mint NFTs!");
+    }
+};
 
-// Update supply counter
 async function updateSupply() {
-  if(!contract) {
-    try {
-      provider = new ethers.BrowserProvider(window.ethereum || "any");
-      contract = new ethers.Contract(contractAddress, abi, provider);
-    } catch {}
-  }
-  try{
-    const total = await contract.totalSupply();
-    const max = await contract.maxSupply();
-    document.getElementById("supply-counter").innerText = `Minted: ${total} / ${max}`;
-  } catch(err){
-    console.error(err);
-    document.getElementById("supply-counter").innerText = "Failed to load supply";
-  }
+    if(!contract) {
+        try {
+            provider = new ethers.BrowserProvider(window.ethereum || "any");
+            contract = new ethers.Contract(contractAddress, abi, provider);
+        } catch {}
+    }
+    try{
+        const total = await contract.totalSupply();
+        const max = await contract.maxSupply();
+        document.getElementById("supply-counter").innerText = `Minted: ${total} / ${max}`;
+    } catch(err){
+        console.error(err);
+        document.getElementById("supply-counter").innerText = "Failed to load supply";
+    }
 }
 
-// Mint NFT
 async function mintNFT(amount=1,statusId){
-  if(!contract) await connectWallet();
-  const statusEl = document.getElementById(statusId);
-  try{
-    statusEl.className = "status";
-    statusEl.innerText = "Minting... please wait!";
-    const tx = await contract.mint(amount, { value:0 }); // Free mint
-    await tx.wait();
-    statusEl.className = "status success";
-    statusEl.innerText = `Successfully minted ${amount} NFT(s)!`;
-    updateSupply(); // Refresh supply counter
-  }catch(err){
-    console.error(err);
-    statusEl.className = "status error";
-    statusEl.innerText = "Mint failed: "+(err?.data?.message || err.message || "Unknown error");
-  }
+    if(!contract){
+        alert("Connect your wallet first!");
+        return;
+    }
+    const statusEl = document.getElementById(statusId);
+    try{
+        statusEl.className="status";
+        statusEl.innerText="Minting... please wait!";
+        const tx = await contract.mint(amount,{value:0}); // Free mint
+        await tx.wait();
+        statusEl.className="status success";
+        statusEl.innerText=`Successfully minted ${amount} NFT(s)!`;
+        updateSupply();
+    }catch(err){
+        console.error(err);
+        statusEl.className="status error";
+        statusEl.innerText="Mint failed: "+(err?.data?.message||err.message||"Unknown error");
+    }
 }
 
 // Auto-update supply on page load every 10s
 window.addEventListener('load', ()=>{
-  updateSupply();
-  setInterval(updateSupply,10000);
+    updateSupply();
+    setInterval(updateSupply,10000);
 });
 </script>
 </body>
