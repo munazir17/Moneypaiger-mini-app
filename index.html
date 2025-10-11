@@ -134,4 +134,58 @@ async function connectWallet(){
     provider = new ethers.providers.Web3Provider(window.ethereum);
     signer = provider.getSigner();
     contract = new ethers.Contract(contractAddress, abi, signer);
-    wallet
+    
+    walletEl.textContent = `Connected: ${userAddress.slice(0,6)}...${userAddress.slice(-4)}`;
+    btn.textContent='Connected';
+    btn.style.background='#22c55e';
+    
+    await updateSupply();
+  }catch(err){
+    console.error('Connection error:',err);
+    btn.textContent='Connect Wallet';
+    btn.disabled=false;
+    alert('Failed to connect wallet');
+  }
+}
+
+async function mintNFT(statusId){
+  if(!userAddress){ alert('Connect wallet first!'); return; }
+  const statusEl = document.getElementById(statusId);
+  try{
+    statusEl.className='status info';
+    statusEl.textContent='Minting... Please confirm transaction';
+    
+    const tx = await contract.publicMint();
+    statusEl.textContent='Transaction sent! Waiting for confirmation...';
+    
+    await tx.wait();
+    statusEl.className='status success';
+    statusEl.textContent='✓ Minted successfully!';
+    
+    await updateSupply();
+  }catch(err){
+    console.error('Mint error:',err);
+    statusEl.className='status error';
+    statusEl.textContent = err.message.includes('user rejected') 
+      ? 'Transaction cancelled' 
+      : 'Mint failed: '+err.message;
+  }
+}
+
+document.getElementById('connectBtn').addEventListener('click', connectWallet);
+
+window.ethereum?.on('accountsChanged', (accounts)=>{
+  if(accounts.length===0){
+    userAddress=null;
+    document.getElementById('connectBtn').textContent='Connect Wallet';
+    document.getElementById('connectBtn').style.background='';
+    document.getElementById('connected-wallet').textContent='';
+  }else{
+    connectWallet();
+  }
+});
+
+updateSupply();
+</script>
+</body>
+</html>
