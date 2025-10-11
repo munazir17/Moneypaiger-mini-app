@@ -111,6 +111,39 @@ nftData.forEach(nft=>{
   grid.appendChild(card);
 });
 
+// --- Base Mainnet enforcement ---
+const baseNetwork = {
+  chainId: '0x2105',
+  chainName: 'Base Mainnet',
+  nativeCurrency: { name: 'ETH', symbol: 'ETH', decimals: 18 },
+  rpcUrls: ['https://mainnet.base.org'],
+  blockExplorerUrls: ['https://basescan.org']
+};
+
+async function ensureBaseNetwork() {
+  if (!window.ethereum) return false;
+  const currentChain = await window.ethereum.request({ method: 'eth_chainId' });
+  if (currentChain !== baseNetwork.chainId) {
+    try {
+      await window.ethereum.request({ method: 'wallet_switchEthereumChain', params: [{ chainId: baseNetwork.chainId }] });
+    } catch (err) {
+      if (err.code === 4902) { // Network not added
+        try {
+          await window.ethereum.request({ method: 'wallet_addEthereumChain', params: [baseNetwork] });
+        } catch (addError) {
+          console.error('Failed to add Base network:', addError);
+          return false;
+        }
+      } else {
+        console.error('Failed to switch network:', err);
+        return false;
+      }
+    }
+  }
+  return true;
+}
+// --- End network enforcement ---
+
 async function updateSupply(){
   const supplyEl = document.getElementById('supply-counter');
   try{
@@ -129,6 +162,9 @@ async function connectWallet(){
   const walletEl = document.getElementById('connected-wallet');
   try{
     btn.textContent='Connecting...'; btn.disabled=true;
+
+    await ensureBaseNetwork(); // <-- force Base Mainnet
+
     const accounts = await window.ethereum.request({ method:'eth_requestAccounts' });
     userAddress = accounts[0];
     provider = new ethers.providers.Web3Provider(window.ethereum);
