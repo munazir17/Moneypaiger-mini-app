@@ -4,22 +4,19 @@
     "payload": "eyJkb21haW4iOiJtb25leXBhaWdlci1taW5pLWFwcC52ZXJjZWwuYXBwIn0",
     "signature": "MHg4OTNhZGM5MzdjZWMxYjAyZmZjZmFkYjAyNTI0ZWUxMjAxMjdkYjI0ZWQzM2ZhY2E3MmFkNzRlOGJjZTdjYWFkMWI5Yzc2OWJjYWFmZjQ3NzI3MDk1YmIwNGZkODUxOGEyMGE0NDdlZDBlNGFiZjc4MmJlOWEwNWIwNGIxMWY0NDFi"
   },
-  "name": "moneypaiger mini app",
-  "slug": "moneypaiger",
-  "url": "https://moneypaiger-mini-app-yofe.vercel.app/",
-  "developer": {
-    "name": "munazir",
-    "farcasterHandle": "munazir"
-  },
-  "description": "Timeline of Digital Finance - Mint exclusive NFTs",
-  "icon": "https://moneypaiger-mini-app.vercel.app/images/nft1.png",
-  "categories": ["NFT", "Finance"],
-  "themeColor": "#667eea",
   "frame": {
     "version": "1",
-    "name": "Example Frame",
-    "iconUrl": "https://moneypaiger-mini-app.vercel.app/icon.png",
-    "homeUrl": "https://moneypaiger-mini-app.vercel.app",
+    "name": "moneypaiger mini app",
+    "slug": "moneypaiger",
+    "homeUrl": "https://moneypaiger-mini-app-yofe.vercel.app/",
+    "iconUrl": "https://moneypaiger-mini-app.vercel.app/images/nft1.png",
+    "developer": {
+      "name": "munazir",
+      "farcasterHandle": "munazir"
+    },
+    "description": "Timeline of Digital Finance - Mint exclusive NFTs",
+    "categories": ["NFT", "Finance"],
+    "themeColor": "#667eea",
     "imageUrl": "https://moneypaiger-mini-app.vercel.app/image.png",
     "buttonTitle": "Check this out",
     "splashImageUrl": "https://moneypaiger-mini-app.vercel.app/splash.png",
