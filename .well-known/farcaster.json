@@ -8,11 +8,25 @@
     "version": "1",
     "name": "MoneyPaiger Mini App",
     "iconUrl": "https://moneypaiger-mini-app.vercel.app/images/nft1.png",
-    "homeUrl": "https://moneypaiger-mini-app.vercel.app",
-    "imageUrl": "https://moneypaiger-mini-app.vercel.app/images/nft1.png",
-    "buttonTitle": "Check this out",
     "splashImageUrl": "https://moneypaiger-mini-app.vercel.app/splash.png",
-    "splashBackgroundColor": "#eeccff",
-    "webhookUrl": "https://moneypaiger-mini-app.vercel.app/api/webhook"
+    "splashBackgroundColor": "#1a1a2e",
+    "homeUrl": "https://moneypaiger-mini-app.vercel.app",
+    "subtitle": "Timeline of Digital Finance - Since 2017",
+    "description": "Explore the evolution of digital finance through interactive NFTs. Mint exclusive collectibles commemorating pivotal moments in financial history.",
+    "screenshotUrls": [
+      "https://moneypaiger-mini-app.vercel.app/images/nft1.png",
+      "https://moneypaiger-mini-app.vercel.app/images/nft2.png",
+      "https://moneypaiger-mini-app.vercel.app/images/nft3.png",
+      "https://moneypaiger-mini-app.vercel.app/images/nft4.png",
+      "https://moneypaiger-mini-app.vercel.app/images/nft5.png",
+      "https://moneypaiger-mini-app.vercel.app/images/nft6.png"
+    ],
+    "primaryCategory": "art-creativity",
+    "tags": ["moneyPaiger", "NFT", "mint", "finance", "timeline"],
+    "heroImageUrl": "https://moneypaiger-mini-app.vercel.app/images/nft1.png",
+    "tagline": "Mint your digital finance collectibles now!",
+    "ogTitle": "MoneyPaiger Mini App",
+    "ogDescription": "Explore the evolution of digital finance through interactive NFTs.",
+    "ogImageUrl": "https://moneypaiger-mini-app.vercel.app/images/nft1.png"
   }
 }
