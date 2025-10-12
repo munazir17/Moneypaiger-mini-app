@@ -1,15 +1,28 @@
 {
-  "name": "MoneyPaiger Mini App",
-  "slug": "moneypaiger",
-  "homeUrl": "https://moneypaiger-mini-app.vercel.app/",
-  "developer": {
-    "name": "Munazir Raza",
-    "farcasterHandle": "munazir"
+  "accountAssociation": {
+    "header": "eyJmaWQiOjM4NTE3OSwidHlwZSI6ImN1c3RvZHkiLCJrZXkiOiIweGM2RjIyMzE1MDIzZjQ3REFGMjFDNTgwRDc3ZDVGODYwQzllQzhEODYifQ",
+    "payload": "eyJkb21haW4iOiJtb25leXBhaWdlci1taW5pLWFwcC52ZXJjZWwuYXBwIn0",
+    "signature": "MHg4OTNhZGM5MzdjZWMxYjAyZmZjZmFkYjAyNTI0ZWUxMjAxMjdkYjI0ZWQzM2ZhY2E3MmFkNzRlOGJjZTdjYWFkMWI5Yzc2OWJjYWFmZjQ3NzI3MDk1YmIwNGZkODUxOGEyMGE0NDdlZDBlNGFiZjc4MmJlOWEwNWIwNGIxMWY0NDFi"
   },
-  "description": "Timeline of Digital Finance - Mint exclusive NFTs",
   "frame": {
-    "v": "vNext",
-    "image": "https://moneypaiger-mini-app.vercel.app/images/nft1.png",
-    "openInFrame": true
+    "version": "1",
+    "name": "MoneyPaiger Mini App",
+    "iconUrl": "https://moneypaiger-mini-app.vercel.app/images/nft1.png",
+    "homeUrl": "https://moneypaiger-mini-app.vercel.app",
+    "imageUrl": "https://moneypaiger-mini-app.vercel.app/images/og.png",
+    "buttonTitle": "Check this out",
+    "splashImageUrl": "https://moneypaiger-mini-app.vercel.app/images/splash.png",
+    "splashBackgroundColor": "#1a1a2e",
+    "webhookUrl": "https://moneypaiger-mini-app.vercel.app/api/webhook",
+    "subtitle": "Timeline of Digital Finance",
+    "description": "Mint exclusive MoneyPaiger NFTs!",
+    "screenshotUrls": [],
+    "primaryCategory": "art-creativity",
+    "tags": ["moneypaiger", "nft", "mint", "digitalfinance"],
+    "heroImageUrl": "https://moneypaiger-mini-app.vercel.app/images/og.png",
+    "tagline": "Timeline of Digital Finance",
+    "ogTitle": "MoneyPaiger Mini App",
+    "ogDescription": "Mint exclusive MoneyPaiger NFTs!",
+    "ogImageUrl": "https://moneypaiger-mini-app.vercel.app/images/og.png"
   }
 }
