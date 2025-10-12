@@ -6,7 +6,7 @@
     "name": "Munazir",
     "farcasterHandle": "munazir"
   },
-  "description": "Timeline of Digital Finance - Mint exclusive NFTs",
+  "description": "Explore the evolution of digital finance through interactive NFTs. Mint exclusive collectibles commemorating pivotal moments in financial history.",
   "frame": {
     "version": "1",
     "iconUrl": "https://moneypaiger-mini-app.vercel.app/images/nft1.png",
@@ -20,5 +20,7 @@
     "ogTitle": "MoneyPaiger Mini App",
     "ogDescription": "Explore the evolution of digital finance through interactive NFTs",
     "ogImageUrl": "https://moneypaiger-mini-app.vercel.app/images/nft1.png"
-  }
+  },
+  "primaryCategory": "finance",
+  "tags": ["finance", "nft"]
 }
