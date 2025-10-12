@@ -3,24 +3,13 @@
   "slug": "moneypaiger",
   "homeUrl": "https://moneypaiger-mini-app.vercel.app/",
   "developer": {
-    "name": "Munazir",
+    "name": "Munazir Raza",
     "farcasterHandle": "munazir"
   },
-  "description": "Explore the evolution of digital finance through interactive NFTs. Mint exclusive collectibles commemorating pivotal moments in financial history.",
+  "description": "Timeline of Digital Finance - Mint exclusive NFTs",
   "frame": {
-    "version": "1",
-    "iconUrl": "https://moneypaiger-mini-app.vercel.app/images/nft1.png",
-    "imageUrl": "https://moneypaiger-mini-app.vercel.app/images/nft1.png",
-    "buttonTitle": "Launch App",
-    "splashImageUrl": "https://moneypaiger-mini-app.vercel.app/images/nft1.png",
-    "splashBackgroundColor": "#667eea",
-    "subtitle": "Timeline of Digital Finance",
-    "heroImageUrl": "https://moneypaiger-mini-app.vercel.app/images/nft1.png",
-    "tagline": "Mint NFTs of Financial History",
-    "ogTitle": "MoneyPaiger Mini App",
-    "ogDescription": "Explore the evolution of digital finance through interactive NFTs",
-    "ogImageUrl": "https://moneypaiger-mini-app.vercel.app/images/nft1.png"
-  },
-  "primaryCategory": "finance",
-  "tags": ["finance", "nft"]
+    "v": "vNext",
+    "image": "https://moneypaiger-mini-app.vercel.app/images/nft1.png",
+    "openInFrame": true
+  }
 }
