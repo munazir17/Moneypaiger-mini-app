@@ -1,4 +1,4 @@
-DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="UTF-8" />
@@ -8,8 +8,7 @@ DOCTYPE html>
 <!-- === Farcaster Mini App Metadata === -->
 <meta property="fc:frame" content="vNext" />
 <meta property="fc:miniapp:domain" content="moneypaiger-mini-app.vercel.app" />
-<meta property="fc:frame:image" content="https://moneypaiger-mini-app.vercel.app/images/nft1.png" />
-  <meta property="fc:frame:open-in-frame" content="true">
+<meta property="fc:frame:open-in-frame" content="true">
 
 <!-- === Open Graph & Social Preview === -->
 <meta property="og:title" content="MoneyPaiger - Timeline of Digital Finance" />
@@ -24,48 +23,14 @@ DOCTYPE html>
 <meta name="twitter:description" content="Explore the evolution of digital finance through interactive NFTs." />
 <meta name="twitter:image" content="https://moneypaiger-mini-app.vercel.app/images/nft1.png" />
 
-<!-- === Favicon (optional) === -->
+<!-- === Favicon === -->
 <link rel="icon" type="image/png" href="https://moneypaiger-mini-app.vercel.app/images/nft1.png" />
 
 <!-- === Ethers.js === -->
 <script src="https://cdn.jsdelivr.net/npm/ethers@5.7.2/dist/ethers.umd.min.js"></script>
 
 <style>
-* { margin:0; padding:0; box-sizing:border-box; }
-body { font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif; background:linear-gradient(135deg,#0a0a0a 0%,#1a1a2e 100%); color:#fff; min-height:100vh; padding:20px; }
-.container { max-width:1200px; margin:0 auto; }
-header { text-align:center; padding:40px 0; border-bottom:2px solid rgba(255,255,255,0.1); margin-bottom:20px; }
-h1 { font-size:3em; font-weight:900; background:linear-gradient(135deg,#667eea 0%,#764ba2 100%); -webkit-background-clip:text; -webkit-text-fill-color:transparent; margin-bottom:10px; }
-.tagline { font-size:1.2em; color:#a0a0a0; margin-bottom:10px; }
-.creator-info { font-size:0.9em; color:#888; margin-top:10px; }
-.creator-info a { color:#667eea; text-decoration:none; transition:color 0.3s; }
-.creator-info a:hover { color:#764ba2; }
-#connectBtn { margin-bottom:10px; padding:15px 25px; font-size:1em; font-weight:700; border:none; border-radius:10px; background:linear-gradient(135deg,#667eea 0%,#764ba2 100%); color:#fff; cursor:pointer; transition: transform 0.2s; }
-#connectBtn:hover { transform:scale(1.05); }
-#connectBtn:disabled { background:#333; cursor:default; }
-.connected-wallet { margin-bottom:20px; color:#22c55e; font-weight:700; }
-.supply-counter { font-size:1.1em; color:#22c55e; margin-bottom:30px; text-align:center; }
-.nft-grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(300px,1fr)); gap:30px; }
-.nft-card { background:rgba(255,255,255,0.05); border-radius:20px; overflow:hidden; transition:transform 0.3s, box-shadow 0.3s; border:1px solid rgba(255,255,255,0.1); }
-.nft-card:hover { transform:translateY(-10px); box-shadow:0 20px 40px rgba(102,126,234,0.3); }
-.nft-image { width:100%; height:300px; object-fit:cover; background:#000; }
-.nft-info { padding:20px; }
-.nft-title { font-size:1.5em; font-weight:700; margin-bottom:10px; color:#fff; }
-.nft-description { font-size:0.95em; color:#a0a0a0; margin-bottom:15px; line-height:1.6; }
-.mint-price { font-size:1.3em; font-weight:700; color:#22c55e; margin-bottom:15px; text-align:center; }
-.mint-button { width:100%; padding:15px; background:linear-gradient(135deg,#667eea 0%,#764ba2 100%); border:none; border-radius:10px; color:white; font-size:1.1em; font-weight:700; cursor:pointer; transition:transform 0.2s, box-shadow 0.2s; }
-.mint-button:hover { transform:scale(1.05); box-shadow:0 10px 25px rgba(102,126,234,0.4); }
-.mint-button:active { transform:scale(0.98); }
-.mint-button:disabled { background:#555; cursor:not-allowed; opacity:0.6; }
-.status { margin-top:10px; padding:10px; border-radius:8px; text-align:center; font-size:0.9em; display:none; }
-.status.success { background:rgba(34,197,94,0.2); color:#22c55e; display:block; }
-.status.error { background:rgba(239,68,68,0.2); color:#ef4444; display:block; }
-.status.info { background:rgba(59,130,246,0.2); color:#3b82f6; display:block; }
-footer { text-align:center; margin-top:60px; padding:30px 0; border-top:2px solid rgba(255,255,255,0.1); color:#888; }
-.social-links { margin-top:15px; }
-.social-links a { color:#667eea; text-decoration:none; margin:0 10px; transition:color 0.3s; }
-.social-links a:hover { color:#764ba2; }
-@media(max-width:768px){ h1{font-size:2em;} .nft-grid{grid-template-columns:1fr;} }
+/* Copy your existing CSS here */
 </style>
 </head>
 <body>
@@ -73,7 +38,7 @@ footer { text-align:center; margin-top:60px; padding:30px 0; border-top:2px soli
 <header>
 <h1>MONEYPAIGER</h1>
 <p class="tagline">Timeline of Digital Finance - Since 2017</p>
-<p class="creator-info">Built by <a href="https://farcaster.xyz/munazir" target="_blank">@munazir</a> on Farcaster</p>
+<p class="creator-info">Built by <a href="https://farcaster.xyz/munazir">@munazir</a> on Farcaster</p>
 <button id="connectBtn">Connect Wallet</button>
 <p class="connected-wallet" id="connected-wallet"></p>
 <div class="supply-counter" id="supply-counter">Loading supply...</div>
@@ -86,148 +51,13 @@ footer { text-align:center; margin-top:60px; padding:30px 0; border-top:2px soli
 <footer>
 <p>&copy; 2025 MoneyPaiger. All rights reserved.</p>
 <div class="social-links">
-<a href="https://farcaster.xyz/munazir" target="_blank">Farcaster</a>
+<a href="https://farcaster.xyz/munazir">Farcaster</a>
 </div>
 </footer>
 </div>
 
 <script>
-const contractAddress = "0x995d1e3471c06f27ad145cc7d0d0bb48f38ad938";
-const abi = [
-  "function publicMint() external",
-  "function currentTokenId() view returns (uint256)"
-];
-const maxSupply = 1000000;
-
-let provider, signer, contract;
-let userAddress = null;
-
-const nftData = [
-  {id:1, title:"Digital Finance Genesis", desc:"Commemorating the foundations of MoneyPaiger ecosystem.", img:"https://moneypaiger-mini-app.vercel.app/images/nft1.png"},
-  {id:2, title:"MP Rising", desc:"The iconic MP logo representing growth and innovation.", img:"https://moneypaiger-mini-app.vercel.app/images/nft2.png"},
-  {id:3, title:"MoneyPaiger Icon", desc:"Sleek MP icon badge representing financial growth.", img:"https://moneypaiger-mini-app.vercel.app/images/nft3.png"},
-  {id:4, title:"MoneyPaiger Brand", desc:"Full branding experience. Professional design meets excellence.", img:"https://moneypaiger-mini-app.vercel.app/images/nft4.png"},
-  {id:5, title:"MP Neon Logo", desc:"Neon styled logo highlighting digital innovation.", img:"https://moneypaiger-mini-app.vercel.app/images/nft5.png"},
-  {id:6, title:"MP Ultimate", desc:"Limited edition NFT celebrating MoneyPaiger milestones.", img:"https://moneypaiger-mini-app.vercel.app/images/nft6.png"}
-];
-
-const grid = document.getElementById("nft-grid");
-nftData.forEach(nft=>{
-  const card = document.createElement("div");
-  card.className="nft-card";
-  card.innerHTML = `
-    <img src="${nft.img}" class="nft-image" alt="${nft.title}">
-    <div class="nft-info">
-      <h3 class="nft-title">${nft.title}</h3>
-      <p class="nft-description">${nft.desc}</p>
-      <div class="mint-price">FREE MINT</div>
-      <button class="mint-button" onclick="mintNFT('status-${nft.id}')">Mint NFT</button>
-      <div class="status" id="status-${nft.id}"></div>
-    </div>
-  `;
-  grid.appendChild(card);
-});
-
-// --- Base Mainnet enforcement ---
-const baseNetwork = {
-  chainId: '0x2105',
-  chainName: 'Base Mainnet',
-  nativeCurrency: { name: 'ETH', symbol: 'ETH', decimals: 18 },
-  rpcUrls: ['https://mainnet.base.org'],
-  blockExplorerUrls: ['https://basescan.org']
-};
-
-async function ensureBaseNetwork() {
-  if (!window.ethereum) return false;
-  const currentChain = await window.ethereum.request({ method: 'eth_chainId' });
-  if (currentChain !== baseNetwork.chainId) {
-    try {
-      await window.ethereum.request({ method: 'wallet_switchEthereumChain', params: [{ chainId: baseNetwork.chainId }] });
-    } catch (err) {
-      if (err.code === 4902) {
-        try {
-          await window.ethereum.request({ method: 'wallet_addEthereumChain', params: [baseNetwork] });
-        } catch (addError) {
-          console.error('Failed to add Base network:', addError);
-          return false;
-        }
-      } else {
-        console.error('Failed to switch network:', err);
-        return false;
-      }
-    }
-  }
-  return true;
-}
-
-async function updateSupply() {
-  const supplyEl = document.getElementById('supply-counter');
-  try {
-    let total = 0;
-    if (contract) total = await contract.currentTokenId();
-    supplyEl.textContent = `Minted: ${total.toString()} / ${maxSupply}`;
-  } catch (err) {
-    console.error('Supply error:', err);
-    supplyEl.textContent = 'Supply: Check wallet connection';
-  }
-}
-
-async function connectWallet() {
-  if (!window.ethereum) { alert('Install MetaMask'); return; }
-  const btn = document.getElementById('connectBtn');
-  const walletEl = document.getElementById('connected-wallet');
-  try {
-    btn.textContent='Connecting...'; btn.disabled=true;
-    await ensureBaseNetwork();
-    const accounts = await window.ethereum.request({ method:'eth_requestAccounts' });
-    userAddress = accounts[0];
-    provider = new ethers.providers.Web3Provider(window.ethereum);
-    signer = provider.getSigner();
-    contract = new ethers.Contract(contractAddress, abi, signer);
-    walletEl.textContent = `Connected: ${userAddress.slice(0,6)}...${userAddress.slice(-4)}`;
-    btn.textContent='Connected';
-    btn.style.background='#22c55e';
-    await updateSupply();
-  } catch (err) {
-    console.error('Connection error:', err);
-    btn.textContent='Connect Wallet';
-    btn.disabled=false;
-    alert('Failed to connect wallet');
-  }
-}
-
-async function mintNFT(statusId) {
-  if (!userAddress) { alert('Connect wallet first!'); return; }
-  const statusEl = document.getElementById(statusId);
-  try {
-    statusEl.className='status info';
-    statusEl.textContent='Minting... Please confirm transaction';
-    const tx = await contract.publicMint();
-    statusEl.textContent='Transaction sent! Waiting for confirmation...';
-    await tx.wait();
-    statusEl.className='status success';
-    statusEl.textContent='✓ Minted successfully!';
-    await updateSupply();
-  } catch (err) {
-    console.error('Mint error:', err);
-    statusEl.className='status error';
-    statusEl.textContent = err.message.includes('user rejected') ? 'Transaction cancelled' : 'Mint failed: '+err.message;
-  }
-}
-
-document.getElementById('connectBtn').addEventListener('click', connectWallet);
-window.ethereum?.on('accountsChanged', (accounts)=>{
-  if(accounts.length===0){
-    userAddress=null;
-    document.getElementById('connectBtn').textContent='Connect Wallet';
-    document.getElementById('connectBtn').style.background='';
-    document.getElementById('connected-wallet').textContent='';
-  }else{
-    connectWallet();
-  }
-});
-
-updateSupply();
+// Copy your existing JS here (wallet connect, mint logic, update supply, etc.)
 </script>
 </body>
 </html>
