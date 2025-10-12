@@ -1,11 +1,20 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-  async redirects() {
+  // Removed redirect - serve .well-known/farcaster.json directly
+  async headers() {
     return [
       {
         source: '/.well-known/farcaster.json',
-        destination: 'https://api.farcaster.xyz/miniapps/hosted-manifest/0199d723-a778-77f2-c001-53f571b66db2',
-        permanent: false,
+        headers: [
+          {
+            key: 'Content-Type',
+            value: 'application/json',
+          },
+          {
+            key: 'Cache-Control',
+            value: 'public, max-age=3600',
+          },
+        ],
       },
     ]
   },
