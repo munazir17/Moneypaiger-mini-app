@@ -1,0 +1,17 @@
+{
+  "accountAssociation": {
+    "header": "eyJmaWQiOjM4NTE3OSwidHlwZSI6ImN1c3RvZHkiLCJrZXkiOiIweGM2RjIyMzE1MDIzZjQ3REFGMjFDNTgwRDc3ZDVGODYwQzllQzhEODYifQ",
+    "payload": "eyJkb21haW4iOiJtb25leXBhaWdlci1taW5pLWFwcC00YmUyLnZlcmNlbC5hcHAifQ",
+    "signature": "MHg4OTNhZGM5MzdjZWMxYjAyZmZjZmFkYjAyNTI0ZWUxMjAxMjdkYjI0ZWQzM2ZhY2E3MmFkNzRlOGJjZTdjYWFkMWI5Yzc2OWJjYWFmZjQ3NzI3MDk1YmIwNGZkODUxOGEyMGE0NDdlZDBlNGFiZjc4MmJlOWEwNWIwNGIxMWY0NDFi"
+  },
+  "frame": {
+    "version": "1",
+    "name": "MoneyPaiger",
+    "iconUrl": "https://moneypaiger-mini-app-4be2.vercel.app/images/nft1.png",
+    "homeUrl": "https://moneypaiger-mini-app-4be2.vercel.app/index.html",
+    "imageUrl": "https://moneypaiger-mini-app-4be2.vercel.app/images/nft1.png",
+    "buttonTitle": "Mint NFT",
+    "splashImageUrl": "https://moneypaiger-mini-app-4be2.vercel.app/images/nft1.png",
+    "splashBackgroundColor": "#1a1a2e"
+  }
+}
