@@ -6,8 +6,8 @@
 <title>MoneyPaiger Mini App</title>
 
 <meta property="fc:frame" content="vNext">
-<meta property="fc:miniapp:domain" content="moneypaiger-mini-app.vercel.app">
-<meta property="fc:frame:image" content="https://moneypaiger-mini-app.vercel.app/images/nft1.png">
+<meta property="fc:miniapp:domain" content="moneypaiger-mini-app-yofe.vercel.app">
+<meta property="fc:frame:image" content="https://moneypaiger-mini-app-yofe.vercel.app/images/nft1.png">
 <meta property="og:title" content="MoneyPaiger Mini App">
 <meta property="og:description" content="Timeline of Digital Finance - Mint exclusive NFTs">
 
@@ -54,8 +54,7 @@ footer{text-align:center;margin-top:60px;padding:30px 0;border-top:2px solid rgb
 <body>
 <div class="container">
 <header>
-<h1>MONEYPAIGER</h1>
-<p class="tagline">Timeline of Digital Finance - Since 2017</p>
+<h1>MONEYPAIGER</h1><p class="tagline">Timeline of Digital Finance - Since 2017</p>
 <p class="creator-info">Built by <a href="https://farcaster.xyz/munazir" target="_blank">@munazir</a> on Farcaster</p>
 <button id="connectBtn">Connect Wallet</button>
 <p class="connected-wallet" id="connected-wallet"></p>
@@ -86,19 +85,19 @@ let provider, signer, contract;
 let userAddress = null;
 
 const nftData = [
-  {id:1, title:"Digital Finance Genesis", desc:"Commemorating the foundations of MoneyPaiger ecosystem.", img:"https://moneypaiger-mini-app.vercel.app/images/nft1.png"},
-  {id:2, title:"MP Rising", desc:"The iconic MP logo representing growth and innovation.", img:"https://moneypaiger-mini-app.vercel.app/images/nft2.png"},
-  {id:3, title:"MoneyPaiger Icon", desc:"Sleek MP icon badge representing financial growth.", img:"https://moneypaiger-mini-app.vercel.app/images/nft3.png"},
-  {id:4, title:"MoneyPaiger Brand", desc:"Full branding experience. Professional design meets excellence.", img:"https://moneypaiger-mini-app.vercel.app/images/nft4.png"},
-  {id:5, title:"MP Neon Logo", desc:"Neon styled logo highlighting digital innovation.", img:"https://moneypaiger-mini-app.vercel.app/images/nft5.png"},
-  {id:6, title:"MP Ultimate", desc:"Limited edition NFT celebrating MoneyPaiger milestones.", img:"https://moneypaiger-mini-app.vercel.app/images/nft6.png"}
+  {id:1, title:"Digital Finance Genesis", desc:"Commemorating the foundations of MoneyPaiger ecosystem.", img:"https://moneypaiger-mini-app-yofe.vercel.app/images/nft1.png"},
+  {id:2, title:"MP Rising", desc:"The iconic MP logo representing growth and innovation.", img:"https://moneypaiger-mini-app-yofe.vercel.app/images/nft2.png"},
+  {id:3, title:"MoneyPaiger Icon", desc:"Sleek MP icon badge representing financial growth.", img:"https://moneypaiger-mini-app-yofe.vercel.app/images/nft3.png"},
+  {id:4, title:"MoneyPaiger Brand", desc:"Full branding experience. Professional design meets excellence.", img:"https://moneypaiger-mini-app-yofe.vercel.app/images/nft4.png"},
+  {id:5, title:"MP Neon Logo", desc:"Neon styled logo highlighting digital innovation.", img:"https://moneypaiger-mini-app-yofe.vercel.app/images/nft5.png"},
+  {id:6, title:"MP Ultimate", desc:"Limited edition NFT celebrating MoneyPaiger milestones.", img:"https://moneypaiger-mini-app-yofe.vercel.app/images/nft6.png"}
 ];
 
 const grid = document.getElementById("nft-grid");
 nftData.forEach(nft=>{
   const card = document.createElement("div");
   card.className="nft-card";
-  card.innerHTML = `
+  card.innerHTML = 
     <img src="${nft.img}" class="nft-image" alt="${nft.title}">
     <div class="nft-info">
       <h3 class="nft-title">${nft.title}</h3>
@@ -107,23 +106,83 @@ nftData.forEach(nft=>{
       <button class="mint-button" onclick="mintNFT('status-${nft.id}')">Mint NFT</button>
       <div class="status" id="status-${nft.id}"></div>
     </div>
-  `;
+  ;
   grid.appendChild(card);
 });
 
-// === Network enforcement & wallet scripts (unchanged) ===
-const baseNetwork = { chainId:'0x2105', chainName:'Base Mainnet', nativeCurrency:{name:'ETH',symbol:'ETH',decimals:18}, rpcUrls:['https://mainnet.base.org'], blockExplorerUrls:['https://basescan.org'] };
+async function updateSupply(){
+  const supplyEl = document.getElementById('supply-counter');
+  try{
+    let total = 0;
+    if(contract) total = await contract.currentTokenId();
+    supplyEl.textContent = Minted: ${total.toString()} / ${maxSupply};
+  }catch(err){
+    console.error('Supply error:',err);
+    supplyEl.textContent = 'Supply: Check wallet connection';
+  }
+}
 
-async function ensureBaseNetwork(){ if(!window.ethereum) return false; const currentChain = await window.ethereum.request({method:'eth_chainId'}); if(currentChain!==baseNetwork.chainId){ try{ await window.ethereum.request({method:'wallet_switchEthereumChain',params:[{chainId:baseNetwork.chainId}]}); }catch(err){ if(err.code===4902){ try{ await window.ethereum.request({method:'wallet_addEthereumChain',params:[baseNetwork]}); }catch(e){console.error(e);return false;} }else{console.error(err);return false;} } } return true; }
+async function connectWallet(){
+  if(!window.ethereum){ alert('Install MetaMask'); return; }
+  const btn = document.getElementById('connectBtn');
+  const walletEl = document.getElementById('connected-wallet');
+  try{
+    btn.textContent='Connecting...'; btn.disabled=true;
+    const accounts = await window.ethereum.request({ method:'eth_requestAccounts' });
+    userAddress = accounts[0];
+    provider = new ethers.providers.Web3Provider(window.ethereum);
+    signer = provider.getSigner();
+    contract = new ethers.Contract(contractAddress, abi, signer);
+    
+    walletEl.textContent = Connected: ${userAddress.slice(0,6)}...${userAddress.slice(-4)};
+    btn.textContent='Connected';
+    btn.style.background='#22c55e';
+    
+    await updateSupply();
+  }catch(err){
+    console.error('Connection error:',err);
+    btn.textContent='Connect Wallet';
+    btn.disabled=false;
+    alert('Failed to connect wallet');
+  }
+}
 
-async function updateSupply(){ const supplyEl=document.getElementById('supply-counter'); try{ let total=0; if(contract) total=await contract.currentTokenId(); supplyEl.textContent=`Minted: ${total.toString()} / ${maxSupply}`; }catch(err){console.error(err); supplyEl.textContent='Supply: Check wallet connection'; } }
-
-async function connectWallet(){ if(!window.ethereum){ alert('Install MetaMask'); return;} const btn=document.getElementById('connectBtn'); const walletEl=document.getElementById('connected-wallet'); try{ btn.textContent='Connecting...'; btn.disabled=true; await ensureBaseNetwork(); const accounts=await window.ethereum.request({method:'eth_requestAccounts'}); userAddress=accounts[0]; provider=new ethers.providers.Web3Provider(window.ethereum); signer=provider.getSigner(); contract=new ethers.Contract(contractAddress,abi,signer); walletEl.textContent=`Connected: ${userAddress.slice(0,6)}...${userAddress.slice(-4)}`; btn.textContent='Connected'; btn.style.background='#22c55e'; await updateSupply(); }catch(err){ console.error(err); btn.textContent='Connect Wallet'; btn.disabled=false; alert('Failed to connect wallet'); } }
-
-async function mintNFT(statusId){ if(!userAddress){ alert('Connect wallet first!'); return; } const statusEl=document.getElementById(statusId); try{ statusEl.className='status info'; statusEl.textContent='Minting... Please confirm transaction'; const tx=await contract.publicMint(); statusEl.textContent='Transaction sent! Waiting for confirmation...'; await tx.wait(); statusEl.className='status success'; statusEl.textContent='✓ Minted successfully!'; await updateSupply(); }catch(err){ console.error(err); statusEl.className='status error'; statusEl.textContent=err.message.includes('user rejected')?'Transaction cancelled':'Mint failed: '+err.message; } }
+async function mintNFT(statusId){if(!userAddress){ alert('Connect wallet first!'); return; }
+  const statusEl = document.getElementById(statusId);
+  try{
+    statusEl.className='status info';
+    statusEl.textContent='Minting... Please confirm transaction';
+    
+    const tx = await contract.publicMint();
+    statusEl.textContent='Transaction sent! Waiting for confirmation...';
+    
+    await tx.wait();
+    statusEl.className='status success';
+    statusEl.textContent='✓ Minted successfully!';
+    
+    await updateSupply();
+  }catch(err){
+    console.error('Mint error:',err);
+    statusEl.className='status error';
+    statusEl.textContent = err.message.includes('user rejected') 
+      ? 'Transaction cancelled' 
+      : 'Mint failed: '+err.message;
+  }
+}
 
 document.getElementById('connectBtn').addEventListener('click', connectWallet);
-window.ethereum?.on('accountsChanged', (accounts)=>{ if(accounts.length===0){ userAddress=null; document.getElementById('connectBtn').textContent='Connect Wallet'; document.getElementById('connectBtn').style.background=''; document.getElementById('connected-wallet').textContent=''; }else{ connectWallet(); } });
+
+window.ethereum?.on('accountsChanged', (accounts)=>{
+  if(accounts.length===0){
+    userAddress=null;
+    document.getElementById('connectBtn').textContent='Connect Wallet';
+    document.getElementById('connectBtn').style.background='';
+    document.getElementById('connected-wallet').textContent='';
+  }else{
+    connectWallet();
+  }
+});
+
 updateSupply();
 </script>
 </body>
