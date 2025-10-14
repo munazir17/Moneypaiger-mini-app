@@ -1,11 +1,17 @@
-{
-  "routes": [
+"routes": [
     {
       "src": "/.well-known/farcaster.json",
-      "dest": "/.well-known/farcaster.json",
+      "dest": "/farcaster.json",
       "headers": {
-        "Content-Type": "application/json"
+        "Content-Type": "application/json",
+        "Access-Control-Allow-Origin": "*"
       }
+    }
+  ],
+  "rewrites": [
+    {
+      "source": "/.well-known/farcaster.json",
+      "destination": "/farcaster.json"
     }
   ]
 }
