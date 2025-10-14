@@ -1,30 +1,11 @@
 {
-  "version": 2,
-  "buildCommand": "npm run build",
-  "framework": "vite",
-  "rewrites": [
+  "routes": [
     {
-      "source": "/api/frame",
-      "destination": "/api/frame.ts"
-    }
-  ],
-  "headers": [
-    {
-      "source": "/api/(.*)",
-      "headers": [
-        {
-          "key": "Access-Control-Allow-Origin",
-          "value": "*"
-        },
-        {
-          "key": "Access-Control-Allow-Methods",
-          "value": "GET, POST, OPTIONS"
-        },
-        {
-          "key": "Access-Control-Allow-Headers",
-          "value": "Content-Type"
-        }
-      ]
+      "src": "/.well-known/farcaster.json",
+      "dest": "/.well-known/farcaster.json",
+      "headers": {
+        "Content-Type": "application/json"
+      }
     }
   ]
 }
