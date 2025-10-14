@@ -3,18 +3,7 @@ import { VercelRequest, VercelResponse } from '@vercel/node';
 interface FrameRequest {
   untrustedData: {
     fid: number;
-    url: string;
-    messageHash: string;
-    timestamp: number;
-    network: number;
     buttonIndex: number;
-    castId: {
-      fid: number;
-      hash: string;
-    };
-  };
-  trustedData: {
-    messageBytes: string;
   };
 }
 
@@ -26,105 +15,112 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
   try {
     const frameRequest = req.body as FrameRequest;
     const buttonIndex = frameRequest.untrustedData?.buttonIndex || 1;
-    const fid = frameRequest.untrustedData?.fid;
-
-    // Base URL for your app
+    
     const baseUrl = 'https://moneypaiger-mini-app-4be2.vercel.app';
-
-    // Handle different button interactions
+    
     let imageUrl = `${baseUrl}/og-image.png`;
     let buttons = [];
-    let postUrl = `${baseUrl}/api/frame`;
 
     switch (buttonIndex) {
       case 1:
-        // Track Money button clicked
         imageUrl = `${baseUrl}/frame-track.png`;
         buttons = [
-          { label: '💰 Add Income', action: 'post', target: `${baseUrl}/api/frame` },
-          { label: '💸 Add Expense', action: 'post', target: `${baseUrl}/api/frame` },
-          { label: '📊 View Dashboard', action: 'link', target: baseUrl },
+          { label: '💰 Add Income', action: 'post' },
+          { label: '💸 Add Expense', action: 'post' },
+          { label: '📊 Open App', action: 'link', target: baseUrl },
         ];
         break;
-      
       case 2:
-        // Add Income
         imageUrl = `${baseUrl}/frame-income.png`;
         buttons = [
-          { label: '← Back', action: 'post', target: `${baseUrl}/api/frame` },
+          { label: '← Back', action: 'post' },
           { label: '💰 Open App', action: 'link', target: `${baseUrl}?action=income` },
         ];
         break;
-      
       case 3:
-        // Add Expense
         imageUrl = `${baseUrl}/frame-expense.png`;
         buttons = [
-          { label: '← Back', action: 'post', target: `${baseUrl}/api/frame` },
+          { label: '← Back', action: 'post' },
           { label: '💸 Open App', action: 'link', target: `${baseUrl}?action=expense` },
         ];
         break;
-      
       default:
         buttons = [
-          { label: 'Track Your Money', action: 'post', target: `${baseUrl}/api/frame` },
-          { label: 'View Demo', action: 'link', target: baseUrl },
+          { label: '💰 Track Money', action: 'post' },
+          { label: '📊 Open App', action: 'link', target: baseUrl },
         ];
     }
 
-    // Generate Frame HTML response
-    const frameHtml = generateFrameHtml(imageUrl, buttons, postUrl);
-    
-    res.setHeader('Content-Type', 'text/html');
-    res.status(200).send(frameHtml);
-  } catch (error) {
-    console.error('Frame handler error:', error);
-    res.status(500).json({ error: 'Internal server error' });
-  }
-}
+    const buttonTags = buttons.map((btn, i) => {
+      const idx = i + 1;
+      if (btn.action === 'link') {
+        return `<meta property="fc:frame:button:${idx}" content="${btn.label}" />
+    <meta property="fc:frame:button:${idx}:action" content="link" />
+    <meta property="fc:frame:button:${idx}:target" content="${btn.target}" />`;
+      }
+      return `<meta property="fc:frame:button:${idx}" content="${btn.label}" />`;
+    }).join('\n    ');
 
-function generateFrameHtml(imageUrl: string, buttons: any[], postUrl: string): string {
-  const buttonTags = buttons.map((btn, index) => {
-    const i = index + 1;
-    if (btn.action === 'link') {
-      return `
-    <meta property="fc:frame:button:${i}" content="${btn.label}" />
-    <meta property="fc:frame:button:${i}:action" content="link" />
-    <meta property="fc:frame:button:${i}:target" content="${btn.target}" />`;
-    }
-    return `
-    <meta property="fc:frame:button:${i}" content="${btn.label}" />`;
-  }).join('');
-
-  return `
-<!DOCTYPE html>
+    const html = `<!DOCTYPE html>
 <html>
   <head>
     <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>MoneyPaiger - Track Your Finances</title>
-    
-    <!-- Frame Meta Tags -->
     <meta property="fc:frame" content="vNext" />
     <meta property="fc:frame:image" content="${imageUrl}" />
     <meta property="fc:frame:image:aspect_ratio" content="1:1" />
-    <meta property="fc:frame:post_url" content="${postUrl}" />
+    <meta property="fc:frame:post_url" content="${baseUrl}/api/frame" />
     ${buttonTags}
+  </head>
+  <body><h1>MoneyPaiger Frame</h1></body>
+</html>`;
     
-    <!-- Open Graph -->
+    res.setHeader('Content-Type', 'text/html');
+    res.status(200).send(html);
+  } catch (error) {
+    console.error('Frame error:', error);
+    res.status(500).json({ error: 'Internal server error' });
+  }
+}
+```
+
+**Save the file.**
+
+---
+
+### **STEP 2: Update index.html**
+
+1. Open `index.html` in your root folder
+2. Find the `<head>` section
+3. Add these meta tags **after** the viewport meta tag:
+
+```html
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/svg+xml" href="/vite.svg" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    
+    <!-- ADD THESE FARCASTER FRAME META TAGS -->
+    <meta property="fc:frame" content="vNext" />
+    <meta property="fc:frame:image" content="https://moneypaiger-mini-app-4be2.vercel.app/og-image.png" />
+    <meta property="fc:frame:image:aspect_ratio" content="1:1" />
+    <meta property="fc:frame:post_url" content="https://moneypaiger-mini-app-4be2.vercel.app/api/frame" />
+    <meta property="fc:frame:button:1" content="💰 Track Money" />
+    <meta property="fc:frame:button:2" content="📊 Open App" />
+    <meta property="fc:frame:button:2:action" content="link" />
+    <meta property="fc:frame:button:2:target" content="https://moneypaiger-mini-app-4be2.vercel.app" />
+    
+    <!-- Open Graph Meta Tags -->
     <meta property="og:title" content="MoneyPaiger - Track Your Finances" />
-    <meta property="og:description" content="Track income, expenses, and manage your budget directly in Farcaster" />
-    <meta property="og:image" content="${imageUrl}" />
+    <meta property="og:description" content="Track income, expenses, and budgets on Farcaster. Built by @munazir" />
+    <meta property="og:image" content="https://moneypaiger-mini-app-4be2.vercel.app/og-image.png" />
+    <meta property="og:url" content="https://moneypaiger-mini-app-4be2.vercel.app" />
     
-    <!-- Twitter Card -->
-    <meta name="twitter:card" content="summary_large_image" />
-    <meta name="twitter:title" content="MoneyPaiger" />
-    <meta name="twitter:description" content="Track your finances in Farcaster" />
-    <meta name="twitter:image" content="${imageUrl}" />
+    <title>MoneyPaiger - Timeline of Digital Finance</title>
   </head>
   <body>
-    <h1>MoneyPaiger - Track Your Money</h1>
-    <p>A financial tracking app for Farcaster</p>
+    <div id="root"></div>
+    <script type="module" src="/src/main.tsx"></script>
   </body>
-</html>`;
-}
+</html>
