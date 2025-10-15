@@ -17,9 +17,9 @@ export default async function handler(req, res) {
       type: 'frame',
       frame: {
         version: 'vNext',
-        image: 'https://moneypaiger-mini-app-4be2.vercel.app/og-image.png', // Dynamic image if needed
+        image: 'https://moneypaiger-mini-app-4be2.vercel.app/images/nft2.png', // Dynamic image if needed
         buttons: [{ label: 'Next Event', action: 'post' }],
-        post_url: 'https://moneypaiger-mini-app-4be2.vercel.app/api/frame',
+        post_url: 'https://moneypaiger-mini-app-4be2.vercel.app/images/nft3.png',
         input: { text: 'Enter finance query...' }
       },
       message: timelineData
