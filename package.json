@@ -19,7 +19,7 @@
   },
   {
   "dependencies": {
-    "@farcaster/miniapp-kit": "file:well-known/farcaster.json",
+    "@farcaster/miniapp-kit": "file:well-known/.farcaster.json",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
     "@vercel/node": "^3.0.21",
