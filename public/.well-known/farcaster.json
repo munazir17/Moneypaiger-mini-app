@@ -1,0 +1,10 @@
+{
+  "name": "MoneyPaiger Mini App",
+  "slug": "moneypaiger",
+  "description": "NFT mint mini app for Base + Farcaster",
+  "homepageUrl": "https://moneypaiger-mini-app-4be2.vercel.app",
+  "developer": {
+    "name": "Munazir",
+    "farcasterHandle": "munazir"
+  }
+}
