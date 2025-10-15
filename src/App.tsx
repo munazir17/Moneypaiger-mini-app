@@ -1,6 +1,59 @@
 import { useState, useEffect } from 'react';
 import { DollarSign, TrendingUp, TrendingDown, Wallet } from 'lucide-react';
+import { useEffect } from 'react';
 
+// Declare Farcaster SDK type
+declare global {
+  interface Window {
+    FarcasterFrameSDK?: {
+      init: () => Promise<any>;
+      actions?: {
+        ready: () => void;
+      };
+    };
+  }
+}
+
+function App() {
+  // Initialize Farcaster SDK
+  useEffect(() => {
+    const initFarcaster = async () => {
+      if (window.FarcasterFrameSDK) {
+        try {
+          const context = await window.FarcasterFrameSDK.init();
+          console.log('✅ Farcaster SDK initialized:', context);
+          
+          // Notify Farcaster that app is ready
+          if (window.FarcasterFrameSDK.actions) {
+            window.FarcasterFrameSDK.actions.ready();
+            console.log('✅ App ready signal sent');
+          }
+        } catch (err) {
+          console.log('ℹ️ Not in Farcaster context:', err);
+        }
+      }
+    };
+
+    // Initialize on mount
+    initFarcaster();
+
+    // Also try on window load as fallback
+    window.addEventListener('load', () => {
+      if (window.FarcasterFrameSDK?.actions) {
+        window.FarcasterFrameSDK.actions.ready();
+      }
+    });
+  }, []);
+
+  // Your existing App component code continues below...
+  return (
+    <div className="App">
+      {/* Your existing JSX */}
+    </div>
+  );
+}
+
+export default App;
 interface Transaction {
   id: string;
   type: 'income' | 'expense';
