@@ -1,10 +1,26 @@
 {
   "name": "MoneyPaiger Mini App",
   "slug": "moneypaiger",
-  "description": "NFT mint mini app for Base + Farcaster",
-  "homepageUrl": "https://moneypaiger-mini-app-4be2.vercel.app",
+  "homeUrl": "https://moneypaiger-mini-app-4be2.vercel.app",
+  "description": "Mint and explore your exclusive NFTs on Base & Farcaster!",
   "developer": {
-    "name": "Munazir",
+    "name": "Munazir Raza",
     "farcasterHandle": "munazir"
-  }
+  },
+  "frame": {
+    "version": "1",
+    "name": "MoneyPaiger Frame",
+    "iconUrl": "https://moneypaiger-mini-app-4be2.vercel.app/icon.png",
+    "homeUrl": "https://moneypaiger-mini-app-4be2.vercel.app",
+    "imageUrl": "https://moneypaiger-mini-app-4be2.vercel.app/image.png",
+    "buttonTitle": "Mint NFTs",
+    "splashImageUrl": "https://moneypaiger-mini-app-4be2.vercel.app/splash.png",
+    "splashBackgroundColor": "#eeccff",
+    "webhookUrl": "https://moneypaiger-mini-app-4be2.vercel.app/api/webhook"
+  },
+  "permissions": [
+    "read:profile",
+    "read:follows",
+    "write:posts"
+  ]
 }
