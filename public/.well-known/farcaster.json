@@ -1,26 +1,27 @@
-{
-  "name": "MoneyPaiger Mini App",
-  "slug": "moneypaiger",
-  "homeUrl": "https://moneypaiger-mini-app-4be2.vercel.app",
-  "description": "Mint and explore your exclusive NFTs on Base & Farcaster!",
-  "developer": {
-    "name": "Munazir Raza",
-    "farcasterHandle": "munazir"
+"accountAssociation": {
+    "header": "eyJmaWQiOjM4NTE3OSwidHlwZSI6ImN1c3RvZHkiLCJrZXkiOiIweGM2RjIyMzE1MDIzZjQ3REFGMjFDNTgwRDc3ZDVGODYwQzllQzhEODYifQ",
+    "payload": "eyJkb21haW4iOiJtb25leXBhaWdlci1taW5pLWFwcC00YmUyLnZlcmNlbC5hcHAifQ",
+    "signature": "MHgyZGU0MzNmMGNiMTQzNTVkM2E1Y2M2M2JiOWZiYzRmYjc3ZDkzZDc2MzY4NDBiZjkyMDRmNTFkYmQ2ODE4NDA4Mjc2Y2E4OTY3NmVlNjg2ZjNiYjkzYzU2Y2VlOTYzN2ZhZjEyODkzNWJiYzNiMTU0N2Y3OGFmYTc5ZjAwMjVmMjFj"
   },
-  "frame": {
+  "miniapp": {
     "version": "1",
-    "name": "MoneyPaiger Frame",
+    "name": "MONEYPAIGER",
     "iconUrl": "https://moneypaiger-mini-app-4be2.vercel.app/images/nft1.png",
     "homeUrl": "https://moneypaiger-mini-app-4be2.vercel.app",
-    "imageUrl": "https://moneypaiger-mini-app-4be2.vercel.app/images/nft1.png",
-    "buttonTitle": "Mint NFTs",
     "splashImageUrl": "https://moneypaiger-mini-app-4be2.vercel.app/images/nft1.png",
-    "splashBackgroundColor": "#eeccff",
-    "webhookUrl": "https://moneypaiger-mini-app-4be2.vercel.app/api/webhook"
-  },
-  "permissions": [
-    "read:profile",
-    "read:follows",
-    "write:posts"
-  ]
-}
+    "splashBackgroundColor": "#1a1a2e",
+    "subtitle": "Digital Finance NFTs on Base",
+    "description": "Mint 5 exclusive free NFTs commemorating digital finance history since 2017. Built on Base Mainnet.",
+    "primaryCategory": "art-creativity",
+    "tags": ["nft", "base", "free-mint", "web3", "digital-finance"],
+    "tagline": "Free NFT mint on Base",
+    "heroImageUrl": "https://moneypaiger-mini-app-4be2.vercel.app/images/nft3.png",
+    "ogTitle": "MONEYPAIGER NFT Collection",
+    "ogDescription": "Mint 5 exclusive free NFTs on Base Mainnet. Timeline of digital finance since 2017.",
+    "ogImageUrl": "https://moneypaiger-mini-app-4be2.vercel.app/images/nft3.png",
+    "requiredChains": ["eip155:8453"],
+    "requiredCapabilities": [
+      "wallet.getEthereumProvider",
+      "actions.signIn"
+    ]
+  }
