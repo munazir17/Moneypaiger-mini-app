@@ -10,11 +10,11 @@
   "frame": {
     "version": "1",
     "name": "MoneyPaiger Frame",
-    "iconUrl": "https://moneypaiger-mini-app-4be2.vercel.app/icon.png",
+    "iconUrl": "https://moneypaiger-mini-app-4be2.vercel.app/images/nft1.png",
     "homeUrl": "https://moneypaiger-mini-app-4be2.vercel.app",
-    "imageUrl": "https://moneypaiger-mini-app-4be2.vercel.app/image.png",
+    "imageUrl": "https://moneypaiger-mini-app-4be2.vercel.app/images/nft1.png",
     "buttonTitle": "Mint NFTs",
-    "splashImageUrl": "https://moneypaiger-mini-app-4be2.vercel.app/splash.png",
+    "splashImageUrl": "https://moneypaiger-mini-app-4be2.vercel.app/images/nft1.png",
     "splashBackgroundColor": "#eeccff",
     "webhookUrl": "https://moneypaiger-mini-app-4be2.vercel.app/api/webhook"
   },
