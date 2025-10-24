@@ -1,22 +1,11 @@
 {
-  "rewrites": [
-    {
-      "source": "/.well-known/farcaster.json",
-      "destination": "/farcaster.json"
-    }
-  ],
   "headers": [
     {
-      "source": "/farcaster.json",
+      "source": "/.well-known/farcaster.json",
       "headers": [
-        {
-          "key": "Content-Type",
-          "value": "application/json"
-        },
-        {
-          "key": "Cache-Control",
-          "value": "public, max-age=3600"
-        }
+        { "key": "Content-Type", "value": "application/json" },
+        { "key": "Access-Control-Allow-Origin", "value": "*" },
+        { "key": "Cache-Control", "value": "public, max-age=3600" }
       ]
     }
   ]
