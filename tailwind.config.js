@@ -7,10 +7,10 @@ export default {
   theme: {
     extend: {
       colors: {
-        // Moneypaiger theme: Green for money, blue for paging/notifications
-        primary: '#10B981',
-        secondary: '#3B82F6'
-      }
+        primary: '#10B981', // green tone for Moneypaiger
+        accent: '#2563EB',  // blue tone for highlights
+        dark: '#111827',    // dark background
+      },
     },
   },
   plugins: [],
