@@ -1,6 +1,7 @@
 {
   "name": "moneypaiger-mini-app",
   "version": "1.0.0",
+  "private": true,
   "scripts": {
     "dev": "vite",
     "build": "tsc && vite build",
