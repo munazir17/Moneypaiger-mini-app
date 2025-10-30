@@ -7,9 +7,9 @@ export default {
   theme: {
     extend: {
       colors: {
-        primary: '#10B981', // green tone for Moneypaiger
-        accent: '#2563EB',  // blue tone for highlights
-        dark: '#111827',    // dark background
+        primary: '#10B981',
+        accent: '#2563EB',
+        dark: '#111827',
       },
     },
   },
